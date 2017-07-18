@@ -24,6 +24,12 @@ plugins {
 
 apply plugin: 'kotlin'
 
+kotlin {
+    experimental {
+        coroutines 'enable'
+    }
+}
+
 sourceCompatibility = '1.8'
 
 mainClassName = 'io.vertx.core.Launcher'
@@ -36,11 +42,16 @@ repositories {
     }
 }
 dependencies {
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+
     compile "io.vertx:vertx-core:$vertx_version"
     compile "io.vertx:vertx-web:$vertx_version"
+    compile "io.vertx:vertx-mysql-postgresql-client:$vertx_version"
+    compile "org.hsqldb:hsqldb:2.3.4"
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile "org.jetbrains.kotlin:kotlin-runtime:$kotlin_version"
+    compile 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.16'
 }
 
 // Redeploy watcher.
