@@ -5,6 +5,9 @@ class Rectangle(val height: Int, val width: Int) {
         get() {
             return height == width
         }
+
+    val isSquare2: Boolean
+        get() = height == width
 }
 
 fun main(args: Array<String>) {
