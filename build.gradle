@@ -48,6 +48,7 @@ dependencies {
     compile "org.codehaus.groovy:groovy-all:$groovy_version"
     compile "io.vertx:vertx-core:$vertx_version"
     compile "io.vertx:vertx-web:$vertx_version"
+    compile "io.vertx:vertx-auth-jwt:$vertx_version"
     compile "io.vertx:vertx-mysql-postgresql-client:$vertx_version"
     compile "com.fasterxml.jackson.module:jackson-module-kotlin:2.8.7"
     compile "org.hsqldb:hsqldb:2.3.4"
