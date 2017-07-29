@@ -24,7 +24,39 @@ class FutureVerticle : AbstractVerticle() {
                     }
                 }
 
-        super.start(startFuture)
+
+        doAll().setHandler { ar ->
+            if (ar.succeeded()) {
+                println("All OK!")
+            } else {
+                print(ar.cause().message)
+            }
+        }
+
+    }
+
+    private fun doAll(): Future<String> {
+        val fu1 = Future.future<String>()
+        val fu2 = Future.future<String>()
+        val fu3 = Future.future<String>()
+
+
+        vertx.setTimer(1000, {
+            println("do 1")
+            fu1.complete()
+        })
+
+
+        return fu1.compose({
+            println("do 2")
+            fu2.complete()
+        }, fu2)
+                .compose({
+                    println("do 3")
+                    fu3.complete()
+                }, fu3)
+
+
     }
 
     private fun doSomething1(): Future<String> {
