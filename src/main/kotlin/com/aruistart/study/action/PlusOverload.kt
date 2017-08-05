@@ -2,7 +2,7 @@ package com.aruistart.study.action
 
 
 // times   *
-
+// contains in
 operator fun Point.plus(other: Point): Point {
     println("extension plus")
     return Point(x + other.x, y + other.y)
