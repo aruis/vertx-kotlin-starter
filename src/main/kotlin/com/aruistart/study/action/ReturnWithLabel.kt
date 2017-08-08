@@ -19,8 +19,22 @@ fun lookForAlice2(people: List<Person2>) {
     println("Alice might be somewhere")
 }
 
+fun lookForAlice3(people: List<Person2>) {
+    people.forEach(fun (person) {
+        if (person.name == "Alice") return
+        println("${person.name} is not Alice")
+    })
+}
+
 fun main(args: Array<String>) {
     lookForAlice(people)
     lookForAlice2(people)
+    lookForAlice3(people)
+
+    println(StringBuilder().apply sb@ {
+        listOf(1, 2, 3).apply {
+            this@sb.append(this.toString())
+        }
+    })
 }
 
