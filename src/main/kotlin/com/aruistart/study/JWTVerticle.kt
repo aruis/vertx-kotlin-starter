@@ -8,6 +8,7 @@ import io.vertx.ext.auth.jwt.JWTOptions
 import io.vertx.ext.web.Router
 import io.vertx.ext.web.handler.JWTAuthHandler
 import io.vertx.ext.web.handler.StaticHandler
+import scala.concurrent.Await.result
 
 
 fun main(args: Array<String>) {
@@ -33,13 +34,16 @@ class JWTVerticle : AbstractVerticle() {
         // this route is excluded from the auth handler
         router.get("/api/newToken").handler({ ctx ->
             ctx.response().putHeader("Content-Type", "text/plain")
-            ctx.response().end(jwt.generateToken(JsonObject().put("name", "aruis"), JWTOptions().setExpiresInSeconds(60L)))
+            ctx.response().end(jwt.generateToken(JsonObject().put("name", "aruis"), JWTOptions().setExpiresInSeconds(10)))
         })
 
         // this is the secret API
         router.get("/api/protected").handler({ ctx ->
             ctx.response().putHeader("Content-Type", "text/plain")
+            ctx.user()
             ctx.response().end("a secret you should keep for yourself...")
+
+
         })
 
         // Serve the non private static pages
