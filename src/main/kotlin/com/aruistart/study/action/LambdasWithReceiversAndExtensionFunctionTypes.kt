@@ -6,10 +6,22 @@ fun buildString(builderAction: (StringBuilder) -> Unit): String {
     return sb.toString()
 }
 
+fun buildString2(builderAction: StringBuilder.() -> Unit): String {
+    val sb = StringBuilder()
+    sb.builderAction()
+    return sb.toString()
+}
+
 fun main(args: Array<String>) {
-    val s = buildString {
+    var s = buildString {
         it.append("Hello, ")
         it.append("World!")
+    }
+    println(s)
+
+    s = buildString2 {
+        this.append("Hello, ")
+        append("World!")
     }
     println(s)
 }
