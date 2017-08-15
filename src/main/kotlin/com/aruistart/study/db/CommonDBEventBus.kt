@@ -17,7 +17,7 @@ class CommonDBEventBus : AbstractVerticle() {
         dbClient = PostgreSQLClient.createShared(vertx, JsonObject()
                 .put("host", "127.0.0.1")
                 .put("port", 5432)
-                .put("maxPoolSize", 30)
+                .put("maxPoolSize", 2)
                 .put("username", "aruis")
                 .put("password", "aruis")
                 .put("database", "aruis"))
@@ -25,6 +25,9 @@ class CommonDBEventBus : AbstractVerticle() {
 
 
         vertx.eventBus().consumer<JsonObject>("common.db.query") { message ->
+
+
+            println(Thread.currentThread().name+" get")
 
             var param = message.body()
             var table = param.getString("table")
@@ -34,6 +37,7 @@ class CommonDBEventBus : AbstractVerticle() {
                     connection.query("select * from $table limit 3") { res ->
                         connection.close()
 
+                        println(Thread.currentThread().name)
                         message.reply(res.result().toJson().getJsonArray("rows"))
 
                     }

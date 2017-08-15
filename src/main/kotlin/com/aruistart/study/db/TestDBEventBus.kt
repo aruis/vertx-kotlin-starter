@@ -11,13 +11,17 @@ fun main(args: Array<String>) {
 
     var vertx = Vertx.vertx()
 
-    vertx.deployVerticle(CommonDBEventBus::class.java.name, DeploymentOptions().setInstances(1), {
+    vertx.deployVerticle(CommonDBEventBus::class.java.name, DeploymentOptions().setInstances(10), {
 
         val eb = vertx.eventBus()
 
 //        eb.send("com.aruistar", "hello")
-        eb.send("common.db.query", JsonObject().put("table", "c_user")) { ar: AsyncResult<Message<JsonArray>> ->
-            print(ar.result().body())
+
+
+        (1..10).map {
+            eb.send("common.db.query", JsonObject().put("table", "test")) { ar: AsyncResult<Message<JsonArray>> ->
+                println(ar.result().body())
+            }
         }
 
 
