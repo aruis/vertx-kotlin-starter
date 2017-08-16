@@ -35,23 +35,33 @@ class DatabaseVerticle extends AbstractVerticle {
             if (ar.succeeded()) {
                 SQLConnection conn = ar.result()
 
-//                conn.setAutoCommit(false, {
-                    conn.query("select * from test limit 3", { res ->
+                conn.setAutoCommit(false, {
+                    conn.query("select * from test where id =  1", { res ->
 
-                        conn.updateWithParams("update test set v_name = ? where id = ? ", ["aaabb", 1], { res2 ->
+                        conn.updateWithParams("update test set v_name = ? where id = ? ", ["xxyy", 1], { res2 ->
 
                             println(res2.succeeded())
 
-                            throw new Exception("xxx")
-                            conn.query("select * from test limit 3", { res3 ->
+                            conn.commit({
+                                conn.query("select * from test where id =  1", { res3 ->
 
-                                println(res3.result().rows)
+                                    println(res3.result().rows)
+
+
+
+                                    conn.rollback({
+
+                                    })
+                                })
                             })
+
+//                            throw new Exception("xxx")
+
                         })
 
                         println(res.result().rows)
                     })
-//                })
+                })
 
 //                conn.query("select * from test limit 3", { res ->
 //                    conn.close()
